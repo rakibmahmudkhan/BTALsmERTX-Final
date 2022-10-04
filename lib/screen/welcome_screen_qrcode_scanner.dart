@@ -41,85 +41,87 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
   }
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Expanded(
-          flex: 3,
-          child: QRView(
-            key: qrKey,
-            onQRViewCreated: _onQRViewCreated,
-            overlay: QrScannerOverlayShape(
-              borderColor: Colors.green,
-              borderRadius: 10,
-              borderLength: 20,
-              borderWidth: 8,
-              cutOutSize: 200,
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            flex: 2,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
+              overlay: QrScannerOverlayShape(
+                borderColor: Colors.green,
+                borderRadius: 10,
+                borderLength: 20,
+                borderWidth: 8,
+                cutOutSize: 200,
+              ),
             ),
           ),
-        ),
-        Row(
+          Row(
 
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [Container(
-            margin: const EdgeInsets.all(8),
-            child: ElevatedButton(
-                onPressed: () async {
-                  await controller?.flipCamera();
-                  setState(() {});
-                },
-                child: FutureBuilder(
-                  future: controller?.getCameraInfo(),
-                  builder: (context, snapshot) {
-                    if (snapshot.data != null) {
-                      return Text(
-                          'Camera facing ${describeEnum(snapshot.data!)}');
-                    } else {
-                      return const Text('loading');
-                    }
-                  },
-                )),
-          ),
-            Container(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [Container(
+              margin: const EdgeInsets.all(8),
               child: ElevatedButton(
                   onPressed: () async {
-                    await controller?.toggleFlash();
+                    await controller?.flipCamera();
                     setState(() {});
                   },
                   child: FutureBuilder(
-                    future: controller?.getFlashStatus(),
+                    future: controller?.getCameraInfo(),
                     builder: (context, snapshot) {
-                      return Text('Flash: ${snapshot.data}');
+                      if (snapshot.data != null) {
+                        return Text(
+                            'Camera facing ${describeEnum(snapshot.data!)}');
+                      } else {
+                        return const Text('loading');
+                      }
                     },
                   )),
-            ),],
-        ),
-
-        Expanded(
-          flex: 5,
-          child: Center(
-            child: (result != null)
-                ? Text(
-                'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
-                : const Text('Scan a code'),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CustomButton.customButton(
-              context,
-              'Scan',
-              CustomButton.onPressedByCondition(
-                false,
-                    () {
-                  controller!.resumeCamera();
-                },
-              ),
             ),
-          ],
-        ),
-      ],
+              Container(
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await controller?.toggleFlash();
+                      setState(() {});
+                    },
+                    child: FutureBuilder(
+                      future: controller?.getFlashStatus(),
+                      builder: (context, snapshot) {
+                        return Text('Flash: ${snapshot.data}');
+                      },
+                    )),
+              ),],
+          ),
+
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: (result != null)
+                  ? Text(
+                  'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
+                  : const Text('Scan a code'),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CustomButton.customButton(
+                context,
+                'Scan',
+                CustomButton.onPressedByCondition(
+                  false,
+                      () {
+                    controller!.resumeCamera();
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

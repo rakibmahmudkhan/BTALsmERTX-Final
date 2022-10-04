@@ -12,32 +12,11 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  Barcode? result;
-  QRViewController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() => this.controller = controller);
-    this.controller!.resumeCamera();
-    controller.scannedDataStream.listen((scanData) {
-      setState(() => result = scanData);
-    });
-  }
 
-  void readQr() async {
-    if (result != null) {
-      controller!.pauseCamera();
-      // Can read multiple time.
-      // If uncomment this line, camera stop after read qr code
-      // controller!.dispose();
-    }
-  }
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
