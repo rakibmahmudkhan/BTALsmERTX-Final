@@ -1,7 +1,7 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:btal_smer_tx/screen/scan_qr_code_screen.dart';
 
- class DashBoardPage extends StatefulWidget {
+class DashBoardPage extends StatefulWidget {
   const DashBoardPage({Key? key}) : super(key: key);
 
   @override
@@ -9,18 +9,10 @@ import 'package:btal_smer_tx/screen/scan_qr_code_screen.dart';
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-    return ScanQrCodeScreen();
-
+    return Container(
+      child:Center(child: Text("Dash Board page"))
+    );
   }
 }
-
-
-
-

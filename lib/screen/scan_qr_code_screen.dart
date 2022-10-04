@@ -61,52 +61,58 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              flex: 2,
+              flex: 3,
               child: QRView(
                 key: qrKey,
                 onQRViewCreated: _onQRViewCreated,
                 overlay: QrScannerOverlayShape(
-                  borderColor: Colors.orange,
+                  borderColor: Colors.green,
                   borderRadius: 10,
-                  borderLength: 30,
-                  borderWidth: 10,
-                  cutOutSize: 250,
+                  borderLength: 20,
+                  borderWidth: 8,
+                  cutOutSize: 200,
                 ),
               ),
+            ),
+            Row(
 
-            ),
-            Container(
-              margin: const EdgeInsets.all(8),
-              child: ElevatedButton(
-                  onPressed: () async {
-                    await controller?.flipCamera();
-                    setState(() {});
-                  },
-                  child: FutureBuilder(
-                    future: controller?.getCameraInfo(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data != null) {
-                        return Text(
-                            'Camera facing ${describeEnum(snapshot.data!)}');
-                      } else {
-                        return const Text('loading');
-                      }
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [Container(
+                margin: const EdgeInsets.all(8),
+                child: ElevatedButton(
+                    onPressed: () async {
+                      await controller?.flipCamera();
+                      setState(() {});
                     },
-                  )),
+                    child: FutureBuilder(
+                      future: controller?.getCameraInfo(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data != null) {
+                          return Text(
+                              'Camera facing ${describeEnum(snapshot.data!)}');
+                        } else {
+                          return const Text('loading');
+                        }
+                      },
+                    )),
+              ),
+                Container(
+                  child: ElevatedButton(
+                      onPressed: () async {
+                        await controller?.toggleFlash();
+                        setState(() {});
+                      },
+                      child: FutureBuilder(
+                        future: controller?.getFlashStatus(),
+                        builder: (context, snapshot) {
+                          return Text('Flash: ${snapshot.data}');
+                        },
+                      )),
+                ),],
             ),
-            Container(child: ElevatedButton(
-                onPressed: () async {
-                  await controller?.toggleFlash();
-                  setState(() {});
-                },
-                child: FutureBuilder(
-                  future: controller?.getFlashStatus(),
-                  builder: (context, snapshot) {
-                    return Text('Flash: ${snapshot.data}');
-                  },
-                )),),
+
             Expanded(
-              flex: 1,
+              flex: 5,
               child: Center(
                 child: (result != null)
                     ? Text(

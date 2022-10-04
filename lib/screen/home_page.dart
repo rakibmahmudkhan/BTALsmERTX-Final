@@ -1,3 +1,4 @@
+import 'package:btal_smer_tx/screen/scan_qr_page.dart';
 import 'package:flutter/material.dart';
 import 'package:btal_smer_tx/screen/about_us_page.dart';
 import 'package:btal_smer_tx/screen/dash_board_page.dart';
@@ -18,7 +19,9 @@ class _HomePageState extends State<HomePage> {
 
     if (currentPage == DrawerSections.dashboard) {
       container = DashBoardPage();
-    } else if (currentPage == DrawerSections.AboutUs) {
+    } else if (currentPage == DrawerSections.ScanQrPage) {
+      container = ScanQrPage();
+    }else if (currentPage == DrawerSections.AboutUs) {
       container = AboutUsPage();
     }
     return Scaffold(
@@ -57,7 +60,9 @@ class _HomePageState extends State<HomePage> {
         children: [
           menuItem(1, "Dashboard", Icons.dashboard_outlined,
               currentPage == DrawerSections.dashboard ? true : false),
-          menuItem(2, "About us", Icons.people_alt_outlined,
+          menuItem(2, "Scan Qr Page", Icons.qr_code,
+              currentPage == DrawerSections.ScanQrPage ? true : false),
+          menuItem(3, "About us", Icons.people_alt_outlined,
               currentPage == DrawerSections.AboutUs ? true : false),
 
         ],
@@ -74,6 +79,8 @@ class _HomePageState extends State<HomePage> {
             if (id == 1) {
               currentPage = DrawerSections.dashboard;
             } else if (id == 2) {
+              currentPage = DrawerSections.ScanQrPage;
+            }else if (id == 3) {
               currentPage = DrawerSections.AboutUs;
             }
           });
@@ -103,6 +110,7 @@ class _HomePageState extends State<HomePage> {
 }
 enum DrawerSections {
   dashboard,
+  ScanQrPage,
   AboutUs,
 
 }
