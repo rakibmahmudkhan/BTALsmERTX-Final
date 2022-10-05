@@ -13,6 +13,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var currentPage = DrawerSections.dashboard;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     var container;
@@ -21,38 +23,50 @@ class _HomePageState extends State<HomePage> {
       container = DashBoardPage();
     } else if (currentPage == DrawerSections.ScanQrPage) {
       container = ScanQrPage();
-    }else if (currentPage == DrawerSections.AboutUs) {
+    } else if (currentPage == DrawerSections.AboutUs) {
       container = AboutUsPage();
     }
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text(
-          'BTALsmERTX',
-          style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
-        ),
-        centerTitle: true,
-        elevation: 0.8,
-        iconTheme: IconThemeData(
-            color: Colors.white
-        ),
-      ),
-      body: container,
-      drawer: Drawer(
-        child: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children: [
-                DrawerHeaderPage(),
-                DrawerList()
-              ],
+    return SafeArea(
+      child: Scaffold(
+        /*appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text(
+            'BTALsmERTX',
+            style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+          ),
+          centerTitle: true,
+          elevation: 0.8,
+          iconTheme: IconThemeData(
+              color: Colors.white
+          ),
+        ),*/
+        key: _scaffoldKey,
+        body: Stack(
+          children: [
+            IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.black,
+              ),
+              onPressed: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
+            ),container,
+          ],
+        ) /*container*/,
+        drawer: Drawer(
+          child: SingleChildScrollView(
+            child: Container(
+              child: Column(
+                children: [DrawerHeaderPage(), DrawerList()],
+              ),
             ),
           ),
         ),
       ),
-
     );
   }
+
   Widget DrawerList() {
     return Container(
       padding: EdgeInsets.only(top: 15),
@@ -64,11 +78,11 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.ScanQrPage ? true : false),
           menuItem(3, "About us", Icons.people_alt_outlined,
               currentPage == DrawerSections.AboutUs ? true : false),
-
         ],
       ),
     );
   }
+
   Widget menuItem(int id, String title, IconData icon, bool selected) {
     return Material(
       color: selected ? Colors.grey[300] : Colors.transparent,
@@ -80,7 +94,7 @@ class _HomePageState extends State<HomePage> {
               currentPage = DrawerSections.dashboard;
             } else if (id == 2) {
               currentPage = DrawerSections.ScanQrPage;
-            }else if (id == 3) {
+            } else if (id == 3) {
               currentPage = DrawerSections.AboutUs;
             }
           });
@@ -108,9 +122,9 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
 enum DrawerSections {
   dashboard,
   ScanQrPage,
   AboutUs,
-
 }

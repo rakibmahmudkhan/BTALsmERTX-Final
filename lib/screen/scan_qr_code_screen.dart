@@ -50,94 +50,115 @@ class _ScanQrCodeScreenState extends State<ScanQrCodeScreen> {
     controller?.dispose();
     super.dispose();
   }
-
+  bool cameraRotate= false;
   @override
   Widget build(BuildContext context) {
     readQr();
 
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 3,
-              child: QRView(
-                key: qrKey,
-                onQRViewCreated: _onQRViewCreated,
-                overlay: QrScannerOverlayShape(
-                  borderColor: Colors.green,
-                  borderRadius: 10,
-                  borderLength: 20,
-                  borderWidth: 8,
-                  cutOutSize: 200,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height*0.05,
+        ),
+        Expanded(
+          flex: 2,
+          child: QRView(
+            key: qrKey,
+            onQRViewCreated: _onQRViewCreated,
+            overlay: QrScannerOverlayShape(
+              borderColor: Colors.green,
+              borderRadius: 10,
+              borderLength: 20,
+              borderWidth: 8,
+              cutOutSize: 160,
+            ),
+          ),
+        ),
+        Row(
+
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [Container(
+            margin: const EdgeInsets.all(8),
+            child: ElevatedButton(
+                onPressed: () async {
+                  await controller?.flipCamera();
+                  setState(() {
+                    cameraRotate=!cameraRotate;
+                  });
+                },
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white),
                 ),
-              ),
-            ),
-            Row(
-
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [Container(
-                margin: const EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () async {
-                      await controller?.flipCamera();
-                      setState(() {});
-                    },
-                    child: FutureBuilder(
-                      future: controller?.getCameraInfo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data != null) {
-                          return Text(
-                              'Camera facing ${describeEnum(snapshot.data!)}');
-                        } else {
-                          return const Text('loading');
-                        }
-                      },
-                    )),
-              ),
-                Container(
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        await controller?.toggleFlash();
-                        setState(() {});
-                      },
-                      child: FutureBuilder(
-                        future: controller?.getFlashStatus(),
-                        builder: (context, snapshot) {
-                          return Text('Flash: ${snapshot.data}');
-                        },
-                      )),
-                ),],
-            ),
-
-            Expanded(
-              flex: 5,
-              child: Center(
-                child: (result != null)
-                    ? Text(
-                        'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
-                    : const Text('Scan a code'),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CustomButton.customButton(
-                  context,
-                  'Scan',
-                  CustomButton.onPressedByCondition(
-                    false,
-                    () {
-                      controller!.resumeCamera();
-                    },
+                child: FutureBuilder(
+                  future: controller?.getCameraInfo(),
+                  builder: (context, snapshot) {
+                    if (snapshot.data != null) {
+                      return Icon(
+                        /*snapshot.data != -1*/
+                        cameraRotate==false
+                            ? Icons.cameraswitch_rounded
+                            : Icons.cameraswitch_outlined,
+                        size: 25,
+                        color: Colors.blueGrey,
+                      ); /* return Text(
+                             */ /* Camera facing   */ /*'${describeEnum(snapshot.data!)}');*/
+                    } else {
+                      return const Text('loading');
+                    }
+                  },
+                )),
+          ),
+            Container(
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await controller?.toggleFlash();
+                    setState(() {});
+                  },
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.white),
                   ),
-                ),
-              ],
+                  child: FutureBuilder(
+                    future: controller?.getFlashStatus(),
+                    builder: (context, snapshot) {
+                      return Icon(
+                        snapshot.data == false
+                            ? Icons.flash_auto
+                            : Icons.flash_off,
+                        size: 25,
+                        color: Colors.blueGrey,
+                      );
+                      /*return Text('Flash: ${snapshot.data}');*/
+                    },
+                  )),
+            ),],
+        ),
+
+        Expanded(
+          flex: 5,
+          child: Center(
+            child: (result != null)
+                ? Text(
+                'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
+                : const Text('Scan a code'),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CustomButton.customButton(
+              context,
+              'Scan',
+              CustomButton.onPressedByCondition(
+                false,
+                    () {
+                  controller!.resumeCamera();
+                },
+              ),
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 }

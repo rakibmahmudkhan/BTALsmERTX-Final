@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../model/button.dart';
+
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
@@ -12,18 +13,11 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       child: Scaffold(
-
-        body:WelcomeScreenQrCode(),
+        body: WelcomeScreenQrCode(),
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:btal_smer_tx/screen/splash_page.dart';
 import 'package:btal_smer_tx/screen/welcome_page.dart';
 import 'package:btal_smer_tx/screen/welcome_screen_qrcode_scanner.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _MyAwesomeAppState extends State<MyAwesomeApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-        home: WelcomeScreenQrCode(),);
+        home: SplashScreen(),);
   }
 }
 

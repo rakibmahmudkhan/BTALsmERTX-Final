@@ -12,7 +12,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child:Center(child: Text("Dash Board page"))
+        child:Center(child: Text("Dash Board page"))
     );
   }
 }
