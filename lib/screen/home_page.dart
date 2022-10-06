@@ -1,4 +1,5 @@
 import 'package:btal_smer_tx/screen/scan_qr_page.dart';
+import 'package:btal_smer_tx/screen/terminal_name_page.dart';
 import 'package:flutter/material.dart';
 import 'package:btal_smer_tx/screen/about_us_page.dart';
 import 'package:btal_smer_tx/screen/dash_board_page.dart';
@@ -25,6 +26,8 @@ class _HomePageState extends State<HomePage> {
       container = ScanQrPage();
     } else if (currentPage == DrawerSections.AboutUs) {
       container = AboutUsPage();
+    } else if (currentPage == DrawerSections.TerminalName) {
+      container = TerminalNamePage();
     }
     return SafeArea(
       child: Scaffold(
@@ -78,6 +81,8 @@ class _HomePageState extends State<HomePage> {
               currentPage == DrawerSections.ScanQrPage ? true : false),
           menuItem(3, "About us", Icons.people_alt_outlined,
               currentPage == DrawerSections.AboutUs ? true : false),
+          menuItem(4, "Terminal Name", Icons.terminal_rounded,
+              currentPage == DrawerSections.TerminalName ? true : false),
         ],
       ),
     );
@@ -96,6 +101,8 @@ class _HomePageState extends State<HomePage> {
               currentPage = DrawerSections.ScanQrPage;
             } else if (id == 3) {
               currentPage = DrawerSections.AboutUs;
+            } else if (id == 4) {
+              currentPage = DrawerSections.TerminalName;
             }
           });
         },
@@ -127,4 +134,5 @@ enum DrawerSections {
   dashboard,
   ScanQrPage,
   AboutUs,
+  TerminalName
 }

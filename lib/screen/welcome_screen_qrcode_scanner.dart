@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:btal_smer_tx/model/ModelName.dart';
 import 'package:btal_smer_tx/model/button.dart';
  import 'package:btal_smer_tx/screen/home_page.dart';
 import 'package:flutter/foundation.dart';
@@ -41,6 +44,20 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
   }
 
   bool cameraRotate = false;
+
+  List<ModelName> displayName=[];
+ List <Map<String, dynamic>> list=[];
+  ModelName modelName=ModelName(terminalName: (result!.code.toString()), terminalUuid: result!.code.toString());
+  Future<List<ModelName>> getDisplayName() async{
+
+    final Barcode? result;
+    var data= jsonDecode(result!.code.toString());
+    if(result.code!=null){
+      for (Map i in data){
+        displayName.add( ModelName(terminalName: "terminame", terminalUuid: "terminalUuid"));
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
