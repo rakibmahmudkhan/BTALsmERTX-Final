@@ -16,7 +16,7 @@ class WelcomeScreenQrCode extends StatefulWidget {
 }
 
 class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
-  Barcode? result;
+  static Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -42,12 +42,14 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
     controller?.dispose();
     super.dispose();
   }
-
   bool cameraRotate = false;
 
-  List<ModelName> displayName=[];
- List <Map<String, dynamic>> list=[];
-  ModelName modelName=ModelName(terminalName: (result!.code.toString()), terminalUuid: result!.code.toString());
+
+
+
+/*  List<ModelName> displayName=[];
+ List <Map<String, dynamic>> list=[];*/
+/*  ModelName modelName=ModelName(terminalName: (result!.code.toString()), terminalUuid: result!.code.toString());
   Future<List<ModelName>> getDisplayName() async{
 
     final Barcode? result;
@@ -57,7 +59,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
         displayName.add( ModelName(terminalName: "terminame", terminalUuid: "terminalUuid"));
       }
     }
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +69,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
-              flex: 2,
+              flex: 6,
               child: QRView(
                 key: qrKey,
                 onQRViewCreated: _onQRViewCreated,
@@ -76,7 +78,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                   borderRadius: 10,
                   borderLength: 20,
                   borderWidth: 8,
-                  cutOutSize: 300,
+                  cutOutSize: 410,
                 ),
               ),
             ),
@@ -164,6 +166,8 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                         SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         prefs.setString('displayName', result!.code.toString());
+                        prefs.setInt('terminal_uuid', result!.code);
+
                         print(' ${result!.code}');
                         Navigator.push(
                             context,

@@ -10,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  String displayName = "";
+    String displayName = "";
 
   @override
   void initState() {
@@ -22,7 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      displayName = prefs.getString('terminalName')!;
+      displayName = prefs.getString('displayName')!;
     });
   }
 
