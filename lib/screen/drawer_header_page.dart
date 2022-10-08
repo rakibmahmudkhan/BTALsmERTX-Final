@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class DrawerHeaderPage extends StatefulWidget {
   const DrawerHeaderPage({Key? key}) : super(key: key);
 
@@ -7,6 +8,21 @@ class DrawerHeaderPage extends StatefulWidget {
 }
 
 class _DrawerHeaderPageState extends State<DrawerHeaderPage> {
+  String displayName = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getData();
+  }
+
+  getData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      displayName = prefs.getString('displayName')!;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,7 +43,7 @@ class _DrawerHeaderPageState extends State<DrawerHeaderPage> {
             ),
           ),
           Text(
-            'Mr. Rahim',
+           displayName,
             style: TextStyle(  fontSize: 20),
           ),
         ],

@@ -11,6 +11,13 @@ class ScanQrPage extends StatefulWidget {
 class _ScanQrPageState extends State<ScanQrPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(child: Center(child: ScanQrCodeScreen()));
+    return Scaffold(
+        appBar: PreferredSize(
+        preferredSize: Size.fromHeight(40.0), // here the desired height
+    child: AppBar(backgroundColor: Colors.white,iconTheme: IconThemeData(
+          color: Colors.black, //change your color here
+        ),),),
+        body:
+     Container(child: Center(child: ScanQrCodeScreen())));
   }
 }

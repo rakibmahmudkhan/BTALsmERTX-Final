@@ -24,6 +24,7 @@ class _HomePageState extends State<HomePage> {
       container = DashBoardPage();
     } else if (currentPage == DrawerSections.ScanQrPage) {
       container = ScanQrPage();
+      container = ScanQrPage();
     } else if (currentPage == DrawerSections.AboutUs) {
       container = AboutUsPage();
     } else if (currentPage == DrawerSections.TerminalName) {

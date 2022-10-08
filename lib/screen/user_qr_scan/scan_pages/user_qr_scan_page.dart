@@ -1,25 +1,23 @@
-import 'dart:convert';
 
-import 'package:btal_smer_tx/model/ModelName.dart';
-import 'package:btal_smer_tx/model/button.dart';
- import 'package:btal_smer_tx/screen/home_page.dart';
-import 'package:btal_smer_tx/screen/user_qr_scan/user_qr_scan_page.dart';
+
+
+import 'package:btal_smer_tx/screen/home_page.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
-class WelcomeScreenQrCode extends StatefulWidget {
-  const WelcomeScreenQrCode({Key? key}) : super(key: key);
+import '../../../model/button.dart';
+class UserQrScanPage extends StatefulWidget {
+  const UserQrScanPage({Key? key}) : super(key: key);
 
   @override
-  State<WelcomeScreenQrCode> createState() => _WelcomeScreenQrCodeState();
+  State<UserQrScanPage> createState() => _UserQrScanPageState();
 }
 
-class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
-
-
-  static Barcode? result;
+class _UserQrScanPageState extends State<UserQrScanPage> {
+  Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
@@ -30,6 +28,8 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
       setState(() => result = scanData);
     });
   }
+
+
 
   void readQr() async {
     if (result != null) {
@@ -46,26 +46,9 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
     super.dispose();
   }
   bool cameraRotate = false;
-
-
-
-
-/*  List<ModelName> displayName=[];
- List <Map<String, dynamic>> list=[];*/
-/*  ModelName modelName=ModelName(terminalName: (result!.code.toString()), terminalUuid: result!.code.toString());
-  Future<List<ModelName>> getDisplayName() async{
-
-    final Barcode? result;
-    var data= jsonDecode(result!.code.toString());
-    if(result.code!=null){
-      for (Map i in data){
-        displayName.add( ModelName(terminalName: "terminame", terminalUuid: "terminalUuid"));
-      }
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
+    readQr();
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -99,7 +82,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
+                        MaterialStateProperty.all(Colors.white),
                       ),
                       child: FutureBuilder(
                         future: controller?.getCameraInfo(),
@@ -128,7 +111,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                       },
                       style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.white),
+                        MaterialStateProperty.all(Colors.white),
                       ),
                       child: FutureBuilder(
                         future: controller?.getFlashStatus(),
@@ -151,7 +134,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
               child: Center(
                 child: (result != null)
                     ? Text(
-                        'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
+                    'Barcode Type: ${describeEnum(result!.format)}\nData: ${result!.code}')
                     : const Text('Scan a code'),
               ),
             ),
@@ -163,7 +146,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                   'Scan',
                   CustomButton.onPressedByCondition(
                     false,
-                    () async {
+                        () async {
                       controller!.resumeCamera();
                       if (result!.code != null ) {
 
@@ -176,7 +159,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
 
                         ModelName modelName = ModelName.fromJson(valueMap);*/
                         SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
+                        await SharedPreferences.getInstance();
                         prefs.setString('displayName', result!.code.toString());
 
 
@@ -185,7 +168,7 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UserQrScanPage()));
+                                builder: (context) => HomePage()));
                       }
                     },
                   ),
@@ -199,3 +182,4 @@ class _WelcomeScreenQrCodeState extends State<WelcomeScreenQrCode> {
     );
   }
 }
+

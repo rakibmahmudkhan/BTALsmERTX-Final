@@ -13,10 +13,8 @@ class TerminalNamePage extends StatefulWidget {
 
 class _TerminalNamePageState extends State<TerminalNamePage> {
   String displayName = "";
- late int uUid;
+  late int uUid;
   List<String> nameList = [];
-  List<ModelName>? mName ;
-
 
 
   @override
@@ -29,28 +27,34 @@ class _TerminalNamePageState extends State<TerminalNamePage> {
   getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-      displayName = prefs.getString('displayName')!;
-    uUid = prefs.getString('terminal_uuid')!;
-    setState(() {
+    displayName = prefs.getString('displayName')!;
 
-    });
-
+    setState(() {});
   }
 
+
+/*  dataValue() {
+    String data = display();
+
+    var encodedString = jsonEncode(data);
+
+    Map<String, dynamic> valueMap = json.decode(encodedString);
+
+    ModelName modelName = ModelName().fromJson<ModelName>(valueMap);
+  }*/
 
 /*  getData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       //nameList.add(displayName);
-      *//*displayName = prefs.getString('displayName')!;
+      */ /*displayName = prefs.getString('displayName')!;
       String jsonStr = prefs.getString('displayName')!;
       Map<String,dynamic> d  = json.decode(jsonStr.trim());
       List<ModelName> mList = List<ModelName>.from(d['terminal_name'].map((x) => ModelName.fromJson(x)));
-      mName =mList ;*//*
+      mName =mList ;*/ /*
   // mName = mList[index].terminalUuid.toString() as List<ModelName>?;
     });
   }*/
-
 
   display() {
     if (displayName != null) {
@@ -63,9 +67,6 @@ class _TerminalNamePageState extends State<TerminalNamePage> {
       return Text("Welcome  ");
     }
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +81,9 @@ class _TerminalNamePageState extends State<TerminalNamePage> {
               padding: const EdgeInsets.all(20.0),
               child: Expanded(child: display()),
             ),
-           Text('${mName[index].terminalName}' )
+            /*Text('${mName[index].terminalName}' )*/
 
-           /* Padding(
+            /* Padding(
               padding: const EdgeInsets.all(20.0),
               child: Expanded(
                   child: ListView.builder(

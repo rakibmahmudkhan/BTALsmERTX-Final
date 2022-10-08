@@ -45,7 +45,12 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Spacer(),
           Expanded(
-              child: display()),
+            flex: 2,
+              child:Container(
+
+               child: Icon(Icons.qr_code_2_sharp,size: 300,),
+              )
+            /*display()*/),
           ElevatedButton(
               onPressed: () {
                 Navigator.push(context,
